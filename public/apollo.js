@@ -128,15 +128,23 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
       _classCallCheck(this, Apollo);
 
+      this.api = 'https://serene-reef-92326.herokuapp.com';
+
+      this.isVisible = false;
       this.el = null;
+      this.isDragging = false;
+      this.dragStartPosition = null;
+      this.currentDragPosition = null;
 
       if (this.isTouchDevice()) {
 
         this.createElement();
 
-        this.request('https://serene-reef-92326.herokuapp.com/ad?publisher=' + window.ApolloOptions.publisher, function (res) {
+        this.request(this.api + '/ad?publisher=' + window.ApolloOptions.publisher, function (res) {
           _this.showAd(JSON.parse(res));
         });
+
+        this.attachEvents();
       }
     }
 
@@ -177,8 +185,53 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         this.el.style.top = '-300px';
         this.el.style.zIndex = '3000000';
         this.el.style.transition = 'top 500ms ease';
+        this.el.style.boxSizing = 'content-box';
 
         document.body.insertAdjacentElement('beforeend', this.el);
+      }
+    }, {
+      key: 'onTouchStart',
+      value: function onTouchStart(e) {
+        var y = e.touches[0].clientY;
+
+        console.log('touch start', y);
+
+        if (y <= 250 && this.isVisible) {
+          this.el.style.transition = '';
+          this.isDragging = true;
+          this.dragStartPosition = y;
+        }
+      }
+    }, {
+      key: 'onTouchMove',
+      value: function onTouchMove(e) {
+        var y = e.touches[0].clientY;
+        var moveTo = this.isDragging ? -1 * (this.dragStartPosition - y) + 10 : null;
+
+        this.currentDragPosition = y;
+
+        if (moveTo) {
+          this.el.style.top = moveTo > 10 ? 10 : moveTo;
+        }
+      }
+    }, {
+      key: 'onTouchEnd',
+      value: function onTouchEnd(e) {
+        var distance = this.dragStartPosition - this.currentDragPosition;
+
+        if (this.isVisible) {
+          this.el.style.transition = 'top 200ms ease';
+          this.isDragging = false;
+          this.el.style.top = distance > 50 ? '-300px' : '10px';
+          this.isVisible = distance <= 50;
+        }
+      }
+    }, {
+      key: 'attachEvents',
+      value: function attachEvents() {
+        document.body.addEventListener('touchstart', this.onTouchStart.bind(this), false);
+        document.body.addEventListener('touchmove', this.onTouchMove.bind(this), false);
+        document.body.addEventListener('touchend', this.onTouchEnd.bind(this), false);
       }
     }, {
       key: 'showAd',
@@ -188,36 +241,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         this.el.innerHTML = html;
 
         this.el.style.top = 10;
-
-        // setTimeout(function() {
-        //   var apollo = document.getElementById('apollo');
-        //   apollo.style.margin = "-300px 0 0";
-        // }, 10000)
-        //
-        // document.addEventListener('touchstart', handleTouchStart, false);
-        // document.addEventListener('touchmove', handleTouchMove, false);
-        //
-        // let yDown = null
-
-        // Only detect touch events that start in the top portion of the screen
-        // Ads can only be swiped after they have been visible for set visible
-
-        // function handleTouchStart(evt) {
-        //   yDown = evt.touches[0].clientY
-        // }
-        //
-        // function handleTouchMove(evt) {
-        //   const yUp = evt.touches[0].clientY
-        //   const yDiff = yDown - yUp
-        //
-        //   if (yDown) {
-        //     if (yDiff > 0) {
-        //       apollo.style.margin = '-300px 0 0 0'
-        //     }
-        //
-        //     yDown = null
-        //   }
-        // }
+        this.isVisible = true;
       }
     }]);
 

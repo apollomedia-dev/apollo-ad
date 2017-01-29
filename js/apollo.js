@@ -61,6 +61,8 @@ class Apollo {
   onTouchStart (e) {
     const y = e.touches[0].clientY
 
+    console.log('touch start', y)
+
     if (y <= 250 && this.isVisible) {
       this.el.style.transition = ''
       this.isDragging = true
@@ -91,9 +93,9 @@ class Apollo {
   }
 
   attachEvents () {
-    document.addEventListener('touchstart', this.onTouchStart.bind(this), false)
-    document.addEventListener('touchmove', this.onTouchMove.bind(this), false)
-    document.addEventListener('touchend', this.onTouchEnd.bind(this), false)
+    document.body.addEventListener('touchstart', this.onTouchStart.bind(this), false)
+    document.body.addEventListener('touchmove', this.onTouchMove.bind(this), false)
+    document.body.addEventListener('touchend', this.onTouchEnd.bind(this), false)
   }
 
   showAd (ad) {
