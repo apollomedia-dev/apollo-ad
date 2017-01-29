@@ -11,7 +11,6 @@ class Apollo {
 
 
     if (this.isTouchDevice()) {
-
       this.createElement()
 
       this.request(`${this.api}/ad?publisher=${window.ApolloOptions.publisher}`, (res) => {
@@ -60,8 +59,6 @@ class Apollo {
 
   onTouchStart (e) {
     const y = e.touches[0].clientY
-
-    console.log('touch start', y)
 
     if (y <= 250 && this.isVisible) {
       this.el.style.transition = ''

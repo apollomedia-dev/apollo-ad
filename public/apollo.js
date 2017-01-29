@@ -137,7 +137,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       this.currentDragPosition = null;
 
       if (this.isTouchDevice()) {
-
         this.createElement();
 
         this.request(this.api + '/ad?publisher=' + window.ApolloOptions.publisher, function (res) {
@@ -193,8 +192,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       key: 'onTouchStart',
       value: function onTouchStart(e) {
         var y = e.touches[0].clientY;
-
-        console.log('touch start', y);
 
         if (y <= 250 && this.isVisible) {
           this.el.style.transition = '';
