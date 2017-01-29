@@ -1,0 +1,24 @@
+{
+  "name": "apollo",
+  "version": "0.0.1",
+  "description": "Apollo banner ad unit.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server",
+    "start:server": "php -S localhost:8000 -t public"
+  },
+  "author": "Adam Veary",
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-es2015-modules-umd": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "webpack": "2",
+    "webpack-dev-server": "2"
+  },
+  "files": [
+    "dist"
+  ]
+}
