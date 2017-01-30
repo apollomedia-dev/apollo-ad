@@ -104,7 +104,7 @@ class Apollo {
         <div style="float: right; width: calc(100% - 30px); color:#000; line-height: 20px;">${ad.headline}</div>
         <div style="clear:both;"></div>
       </div>
-      <div style="color:#000; padding: 10px; background-color:rgba(224, 227, 230, 0.7); border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; fonst-size: 14px;">
+      <div style="color:#000; padding: 10px; background-color:rgba(224, 227, 230, .9); border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; fonst-size: 14px;">
         ${ad.subline}
       </div>
     </a>`
